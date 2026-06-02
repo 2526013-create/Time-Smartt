@@ -1,0 +1,1058 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>TimeSmart – Manage Your Time, Achieve Your Future</title>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet"/>
+  <style>
+    /* =====================
+       CSS VARIABLES & RESET
+       ===================== */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --rose:     #D6336C;
+      --blush:    #FFD6E0;
+      --cream:    #FFF5F8;
+      --petal:    #FFE8EF;
+      --wine:     #8C1A3F;
+      --soft:     #FFF0F5;
+      --ink:      #1A0A10;
+      --muted:    #7A4055;
+      --shadow:   0 4px 24px rgba(214,51,108,.12);
+      --shadow-lg:0 12px 48px rgba(214,51,108,.18);
+      --radius:   18px;
+      --font-h:   'Playfair Display', Georgia, serif;
+      --font-b:   'DM Sans', sans-serif;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: var(--font-b);
+      background: var(--cream);
+      color: var(--ink);
+      line-height: 1.7;
+      overflow-x: hidden;
+    }
+
+    /* =====================
+       STICKY NAVIGATION
+       ===================== */
+    header {
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      background: rgba(255,245,248,.92);
+      backdrop-filter: blur(14px);
+      -webkit-backdrop-filter: blur(14px);
+      border-bottom: 1px solid rgba(214,51,108,.1);
+      box-shadow: 0 2px 16px rgba(214,51,108,.08);
+    }
+
+    nav {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 2rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      height: 64px;
+    }
+
+    .logo {
+      font-family: var(--font-h);
+      font-size: 1.5rem;
+      font-weight: 900;
+      color: var(--rose);
+      text-decoration: none;
+      letter-spacing: -.01em;
+      white-space: nowrap;
+    }
+
+    .nav-links {
+      list-style: none;
+      display: flex;
+      gap: .25rem;
+    }
+
+    .nav-links a {
+      text-decoration: none;
+      color: var(--muted);
+      font-weight: 500;
+      font-size: .9rem;
+      padding: .45rem .85rem;
+      border-radius: 50px;
+      transition: background .2s, color .2s;
+    }
+
+    .nav-links a:hover {
+      background: var(--blush);
+      color: var(--rose);
+    }
+
+    /* Hamburger */
+    .hamburger {
+      display: none;
+      flex-direction: column;
+      gap: 5px;
+      cursor: pointer;
+      padding: 6px;
+      border: none;
+      background: none;
+    }
+
+    .hamburger span {
+      display: block;
+      width: 24px;
+      height: 2px;
+      background: var(--rose);
+      border-radius: 2px;
+      transition: .3s;
+    }
+
+    .mobile-menu {
+      display: none;
+      flex-direction: column;
+      background: var(--cream);
+      border-top: 1px solid var(--blush);
+      padding: 1rem 2rem;
+      gap: .25rem;
+    }
+
+    .mobile-menu a {
+      text-decoration: none;
+      color: var(--muted);
+      font-weight: 500;
+      font-size: .95rem;
+      padding: .6rem .5rem;
+      border-radius: 8px;
+      transition: background .2s, color .2s;
+    }
+
+    .mobile-menu a:hover { background: var(--petal); color: var(--rose); }
+    .mobile-menu.open { display: flex; }
+
+    /* =====================
+       HERO SECTION
+       ===================== */
+    #home {
+      background: linear-gradient(135deg, #fff0f5 0%, #ffe4ed 40%, #ffd6e0 100%);
+      position: relative;
+      overflow: hidden;
+      padding: 5rem 2rem 4rem;
+    }
+
+    #home::before {
+      content: '';
+      position: absolute;
+      width: 600px; height: 600px;
+      border-radius: 50%;
+      background: radial-gradient(circle, rgba(214,51,108,.15) 0%, transparent 70%);
+      top: -200px; right: -200px;
+      pointer-events: none;
+    }
+
+    #home::after {
+      content: '';
+      position: absolute;
+      width: 400px; height: 400px;
+      border-radius: 50%;
+      background: radial-gradient(circle, rgba(255,214,224,.6) 0%, transparent 70%);
+      bottom: -150px; left: -100px;
+      pointer-events: none;
+    }
+
+    .hero-inner {
+      max-width: 1200px;
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      align-items: center;
+      gap: 3rem;
+      position: relative;
+      z-index: 1;
+    }
+
+    .hero-text h1 {
+      font-family: var(--font-h);
+      font-size: clamp(2.2rem, 5vw, 3.6rem);
+      line-height: 1.15;
+      color: var(--ink);
+      margin-bottom: 1.2rem;
+    }
+
+    .hero-text h1 span { color: var(--rose); }
+
+    .hero-text p {
+      font-size: 1.05rem;
+      color: var(--muted);
+      max-width: 460px;
+      margin-bottom: 2rem;
+      line-height: 1.8;
+    }
+
+    .btn-primary {
+      display: inline-block;
+      background: var(--rose);
+      color: #fff;
+      padding: .85rem 2rem;
+      border-radius: 50px;
+      font-weight: 600;
+      font-size: 1rem;
+      text-decoration: none;
+      box-shadow: 0 6px 24px rgba(214,51,108,.35);
+      transition: transform .2s, box-shadow .2s, background .2s;
+    }
+
+    .btn-primary:hover {
+      background: var(--wine);
+      transform: translateY(-3px);
+      box-shadow: 0 12px 32px rgba(214,51,108,.4);
+    }
+
+    .hero-visual {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+
+    /* SVG illustration placeholder */
+    .hero-illustration {
+      width: 100%;
+      max-width: 420px;
+      aspect-ratio: 1;
+      animation: float 5s ease-in-out infinite;
+    }
+
+    @keyframes float {
+      0%,100% { transform: translateY(0); }
+      50%      { transform: translateY(-18px); }
+    }
+
+    /* Decorative badge */
+    .hero-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: .5rem;
+      background: #fff;
+      border: 1.5px solid var(--blush);
+      color: var(--rose);
+      font-weight: 600;
+      font-size: .82rem;
+      padding: .35rem .9rem;
+      border-radius: 50px;
+      margin-bottom: 1.2rem;
+      box-shadow: var(--shadow);
+    }
+
+    /* =====================
+       SECTION COMMON
+       ===================== */
+    section { padding: 5rem 2rem; }
+
+    .section-inner { max-width: 1200px; margin: 0 auto; }
+
+    .section-title {
+      font-family: var(--font-h);
+      font-size: clamp(1.8rem, 3.5vw, 2.6rem);
+      color: var(--ink);
+      text-align: center;
+      margin-bottom: .6rem;
+    }
+
+    .section-title span { color: var(--rose); }
+
+    .section-subtitle {
+      text-align: center;
+      color: var(--muted);
+      font-size: 1rem;
+      max-width: 520px;
+      margin: 0 auto 3rem;
+      line-height: 1.8;
+    }
+
+    /* =====================
+       WHY CARDS
+       ===================== */
+    #tips-intro { background: var(--soft); }
+
+    .cards-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 1.5rem;
+    }
+
+    .card {
+      background: #fff;
+      border-radius: var(--radius);
+      padding: 2rem;
+      box-shadow: var(--shadow);
+      border: 1.5px solid transparent;
+      transition: transform .25s, box-shadow .25s, border-color .25s;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .card::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0;
+      width: 100%; height: 4px;
+      background: linear-gradient(90deg, var(--rose), #ff7aab);
+      transform: scaleX(0);
+      transform-origin: left;
+      transition: transform .3s;
+    }
+
+    .card:hover { transform: translateY(-6px); box-shadow: var(--shadow-lg); border-color: var(--blush); }
+    .card:hover::before { transform: scaleX(1); }
+
+    .card-icon {
+      font-size: 2.4rem;
+      margin-bottom: 1rem;
+      display: inline-block;
+    }
+
+    .card h3 {
+      font-family: var(--font-h);
+      font-size: 1.25rem;
+      margin-bottom: .6rem;
+      color: var(--ink);
+    }
+
+    .card p { color: var(--muted); font-size: .95rem; line-height: 1.75; }
+
+    /* =====================
+       PRODUCTIVE TIPS
+       ===================== */
+    #tips { background: var(--cream); }
+
+    .tips-box {
+      background: #fff;
+      border-radius: var(--radius);
+      padding: 2.5rem;
+      box-shadow: var(--shadow);
+      max-width: 780px;
+      margin: 0 auto;
+      border: 1.5px solid var(--blush);
+    }
+
+    .tips-box h3 {
+      font-family: var(--font-h);
+      font-size: 1.4rem;
+      color: var(--rose);
+      margin-bottom: 1.5rem;
+      display: flex;
+      align-items: center;
+      gap: .5rem;
+    }
+
+    .tips-list { list-style: none; display: flex; flex-direction: column; gap: .85rem; }
+
+    .tips-list li {
+      display: flex;
+      align-items: flex-start;
+      gap: .9rem;
+      font-size: .97rem;
+      color: var(--ink);
+      padding: .8rem 1rem;
+      border-radius: 12px;
+      background: var(--soft);
+      transition: background .2s, transform .2s;
+    }
+
+    .tips-list li:hover { background: var(--petal); transform: translateX(4px); }
+
+    .tip-num {
+      min-width: 28px; height: 28px;
+      background: var(--rose);
+      color: #fff;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: .8rem;
+      font-weight: 700;
+      flex-shrink: 0;
+    }
+
+    /* =====================
+       DAILY SCHEDULE TABLE
+       ===================== */
+    #schedule { background: var(--soft); }
+
+    .table-wrap {
+      overflow-x: auto;
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      background: #fff;
+      font-size: .93rem;
+    }
+
+    thead tr { background: var(--rose); color: #fff; }
+
+    thead th {
+      padding: 1rem 1.25rem;
+      font-weight: 600;
+      text-align: left;
+      font-size: .9rem;
+      letter-spacing: .03em;
+    }
+
+    tbody tr { border-bottom: 1px solid var(--blush); transition: background .2s; }
+    tbody tr:last-child { border-bottom: none; }
+    tbody tr:hover { background: var(--petal); }
+
+    tbody td { padding: .9rem 1.25rem; color: var(--ink); vertical-align: middle; }
+    tbody td:first-child { font-weight: 600; color: var(--rose); white-space: nowrap; }
+
+    .tag {
+      display: inline-block;
+      padding: .25rem .65rem;
+      border-radius: 50px;
+      font-size: .78rem;
+      font-weight: 600;
+    }
+
+    .tag-study   { background: #ffd6e0; color: #8c1a3f; }
+    .tag-rest    { background: #d6f5e9; color: #1a6644; }
+    .tag-social  { background: #fde8c8; color: #7a4a00; }
+    .tag-health  { background: #d6eeff; color: #0a3d6b; }
+
+    /* =====================
+       MOTIVATION SECTION
+       ===================== */
+    #motivation {
+      background: linear-gradient(135deg, var(--rose), #e8507e, #c4255e);
+      color: #fff;
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+    }
+
+    #motivation::before {
+      content: '❝';
+      position: absolute;
+      font-size: 20rem;
+      color: rgba(255,255,255,.06);
+      top: -4rem; left: 1rem;
+      line-height: 1;
+      font-family: serif;
+      pointer-events: none;
+    }
+
+    .quote-text {
+      font-family: var(--font-h);
+      font-size: clamp(1.5rem, 3.5vw, 2.4rem);
+      line-height: 1.4;
+      max-width: 780px;
+      margin: 0 auto 1.2rem;
+      position: relative;
+      z-index: 1;
+    }
+
+    .quote-author {
+      font-size: .95rem;
+      opacity: .85;
+      letter-spacing: .06em;
+      text-transform: uppercase;
+      position: relative;
+      z-index: 1;
+    }
+
+    .motivation-pills {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: .75rem;
+      margin-top: 2.5rem;
+      position: relative;
+      z-index: 1;
+    }
+
+    .pill {
+      background: rgba(255,255,255,.2);
+      border: 1.5px solid rgba(255,255,255,.35);
+      color: #fff;
+      padding: .45rem 1.1rem;
+      border-radius: 50px;
+      font-size: .88rem;
+      font-weight: 500;
+      backdrop-filter: blur(6px);
+    }
+
+    /* =====================
+       FAQ SECTION
+       ===================== */
+    #faq { background: var(--cream); }
+
+    .faq-list {
+      max-width: 780px;
+      margin: 0 auto;
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+    }
+
+    .faq-item {
+      background: #fff;
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      border: 1.5px solid transparent;
+      overflow: hidden;
+      transition: border-color .2s;
+    }
+
+    .faq-item.open { border-color: var(--blush); }
+
+    .faq-q {
+      width: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 1.1rem 1.4rem;
+      background: none;
+      border: none;
+      cursor: pointer;
+      font-family: var(--font-b);
+      font-size: 1rem;
+      font-weight: 600;
+      color: var(--ink);
+      text-align: left;
+      gap: 1rem;
+    }
+
+    .faq-q .faq-icon {
+      min-width: 28px; height: 28px;
+      background: var(--petal);
+      color: var(--rose);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.1rem;
+      transition: transform .3s, background .2s;
+    }
+
+    .faq-item.open .faq-icon { transform: rotate(45deg); background: var(--rose); color: #fff; }
+
+    .faq-a {
+      max-height: 0;
+      overflow: hidden;
+      transition: max-height .35s ease, padding .35s;
+      padding: 0 1.4rem;
+      color: var(--muted);
+      font-size: .95rem;
+      line-height: 1.8;
+    }
+
+    .faq-a.open { max-height: 300px; padding: 0 1.4rem 1.2rem; }
+
+    /* =====================
+       ABOUT SECTION
+       ===================== */
+    #about { background: var(--soft); }
+
+    .about-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 3rem;
+      align-items: center;
+    }
+
+    .about-text h2 {
+      font-family: var(--font-h);
+      font-size: clamp(1.6rem, 3vw, 2.2rem);
+      margin-bottom: 1rem;
+      color: var(--ink);
+    }
+
+    .about-text h2 span { color: var(--rose); }
+    .about-text p { color: var(--muted); margin-bottom: 1rem; line-height: 1.85; font-size: .97rem; }
+
+    .about-visual {
+      background: linear-gradient(135deg, var(--blush), var(--petal));
+      border-radius: var(--radius);
+      padding: 2.5rem;
+      text-align: center;
+    }
+
+    .stat-row {
+      display: flex;
+      justify-content: space-around;
+      gap: 1rem;
+      margin-top: 1.5rem;
+    }
+
+    .stat { text-align: center; }
+
+    .stat-num {
+      font-family: var(--font-h);
+      font-size: 2rem;
+      color: var(--rose);
+      font-weight: 900;
+    }
+
+    .stat-label { font-size: .82rem; color: var(--muted); font-weight: 500; }
+
+    .about-icon { font-size: 4rem; }
+
+    /* =====================
+       FOOTER
+       ===================== */
+    footer {
+      background: var(--ink);
+      color: rgba(255,255,255,.75);
+      padding: 3rem 2rem 2rem;
+      text-align: center;
+    }
+
+    .footer-inner { max-width: 1200px; margin: 0 auto; }
+
+    .footer-logo {
+      font-family: var(--font-h);
+      font-size: 1.6rem;
+      color: var(--blush);
+      margin-bottom: .5rem;
+    }
+
+    .footer-tagline { font-size: .88rem; margin-bottom: 1.5rem; opacity: .6; }
+
+    .footer-links {
+      display: flex;
+      justify-content: center;
+      gap: 1.5rem;
+      flex-wrap: wrap;
+      margin-bottom: 1.5rem;
+    }
+
+    .footer-links a {
+      color: rgba(255,255,255,.65);
+      text-decoration: none;
+      font-size: .88rem;
+      display: flex;
+      align-items: center;
+      gap: .4rem;
+      transition: color .2s;
+    }
+
+    .footer-links a:hover { color: var(--blush); }
+
+    .footer-divider { border: none; border-top: 1px solid rgba(255,255,255,.1); margin: 1rem 0; }
+
+    .footer-copy { font-size: .8rem; opacity: .45; }
+
+    /* =====================
+       RESPONSIVE
+       ===================== */
+    @media (max-width: 900px) {
+      .hero-inner { grid-template-columns: 1fr; text-align: center; }
+      .hero-text p { margin: 0 auto 2rem; }
+      .hero-visual { display: none; }
+      .about-grid { grid-template-columns: 1fr; }
+    }
+
+    @media (max-width: 640px) {
+      .nav-links { display: none; }
+      .hamburger { display: flex; }
+      section { padding: 3.5rem 1.25rem; }
+      nav { padding: 0 1.25rem; }
+      .tips-box { padding: 1.5rem; }
+      .stat-row { gap: .5rem; }
+    }
+
+    /* =====================
+       SCROLL REVEAL
+       ===================== */
+    .reveal {
+      opacity: 0;
+      transform: translateY(28px);
+      transition: opacity .6s ease, transform .6s ease;
+    }
+    .reveal.visible { opacity: 1; transform: none; }
+  </style>
+</head>
+<body>
+
+  <!-- ==================
+       HEADER / NAVBAR
+       ================== -->
+  <header>
+    <nav>
+      <a href="#home" class="logo">⏰ TimeSmart</a>
+      <ul class="nav-links">
+        <li><a href="#home">Home</a></li>
+        <li><a href="#tips">Tips</a></li>
+        <li><a href="#schedule">Schedule</a></li>
+        <li><a href="#motivation">Motivation</a></li>
+        <li><a href="#faq">FAQ</a></li>
+        <li><a href="#about">About</a></li>
+      </ul>
+      <button class="hamburger" id="hamburger" aria-label="Open menu">
+        <span></span><span></span><span></span>
+      </button>
+    </nav>
+    <div class="mobile-menu" id="mobileMenu">
+      <a href="#home"       onclick="closeMenu()">🏠 Home</a>
+      <a href="#tips"       onclick="closeMenu()">💡 Tips</a>
+      <a href="#schedule"   onclick="closeMenu()">📅 Schedule</a>
+      <a href="#motivation" onclick="closeMenu()">✨ Motivation</a>
+      <a href="#faq"        onclick="closeMenu()">❓ FAQ</a>
+      <a href="#about"      onclick="closeMenu()">📖 About</a>
+    </div>
+  </header>
+
+  <main>
+
+    <!-- ==================
+         HERO SECTION
+         ================== -->
+    <section id="home">
+      <div class="hero-inner">
+        <div class="hero-text">
+          <div class="hero-badge">✨ For Students & Teenagers</div>
+          <h1>Manage Your Time,<br><span>Achieve Your Future!</span></h1>
+          <p>
+            Many teenagers struggle with balancing school, assignments, social media,
+            games, and rest — all at once. TimeSmart helps you take back control
+            and build habits that last a lifetime.
+          </p>
+          <a href="#tips" class="btn-primary">Start Learning &rarr;</a>
+        </div>
+        <div class="hero-visual">
+          <!-- Inline SVG illustration -->
+          <svg class="hero-illustration" viewBox="0 0 400 400" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <!-- Background circle -->
+            <circle cx="200" cy="200" r="180" fill="#FFE8EF"/>
+            <!-- Desk -->
+            <rect x="80" y="280" width="240" height="14" rx="7" fill="#D6336C" opacity=".25"/>
+            <!-- Laptop -->
+            <rect x="120" y="210" width="160" height="100" rx="12" fill="#fff" stroke="#D6336C" stroke-width="2.5"/>
+            <rect x="130" y="220" width="140" height="75" rx="6" fill="#FFF0F5"/>
+            <!-- Screen content lines -->
+            <rect x="140" y="232" width="80" height="6" rx="3" fill="#D6336C" opacity=".6"/>
+            <rect x="140" y="246" width="110" height="5" rx="2.5" fill="#FFB3CA" opacity=".7"/>
+            <rect x="140" y="258" width="95" height="5" rx="2.5" fill="#FFB3CA" opacity=".5"/>
+            <rect x="140" y="270" width="60" height="5" rx="2.5" fill="#FFB3CA" opacity=".4"/>
+            <!-- Laptop base -->
+            <rect x="110" y="308" width="180" height="8" rx="4" fill="#D6336C" opacity=".35"/>
+            <!-- Clock face -->
+            <circle cx="290" cy="130" r="50" fill="#fff" stroke="#D6336C" stroke-width="3"/>
+            <circle cx="290" cy="130" r="4" fill="#D6336C"/>
+            <!-- Clock hands -->
+            <line x1="290" y1="130" x2="290" y2="100" stroke="#D6336C" stroke-width="3" stroke-linecap="round"/>
+            <line x1="290" y1="130" x2="310" y2="140" stroke="#8C1A3F" stroke-width="2.5" stroke-linecap="round"/>
+            <!-- Clock ticks -->
+            <line x1="290" y1="84"  x2="290" y2="92"  stroke="#FFD6E0" stroke-width="2"/>
+            <line x1="290" y1="168" x2="290" y2="176" stroke="#FFD6E0" stroke-width="2"/>
+            <line x1="244" y1="130" x2="252" y2="130" stroke="#FFD6E0" stroke-width="2"/>
+            <line x1="328" y1="130" x2="336" y2="130" stroke="#FFD6E0" stroke-width="2"/>
+            <!-- Pencil -->
+            <rect x="95" y="220" width="12" height="70" rx="4" fill="#FFB3CA" transform="rotate(-20 101 255)"/>
+            <polygon points="95,270 107,270 101,285" fill="#D6336C" transform="rotate(-20 101 255)"/>
+            <!-- Stars -->
+            <text x="60"  y="100" font-size="22" fill="#D6336C" opacity=".5">★</text>
+            <text x="335" y="200" font-size="16" fill="#D6336C" opacity=".4">★</text>
+            <text x="155" y="80"  font-size="14" fill="#D6336C" opacity=".35">✦</text>
+            <!-- Checkmarks -->
+            <circle cx="155" cy="170" r="14" fill="#D6336C" opacity=".15"/>
+            <text x="147" y="175" font-size="14" fill="#D6336C">✓</text>
+            <circle cx="350" cy="260" r="11" fill="#D6336C" opacity=".12"/>
+            <text x="344" y="265" font-size="11" fill="#D6336C">✓</text>
+          </svg>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===========================
+         WHY TIME MANAGEMENT MATTERS
+         =========================== -->
+    <section id="tips-intro">
+      <div class="section-inner">
+        <h2 class="section-title reveal">Why Time Management <span>Matters</span></h2>
+        <p class="section-subtitle reveal">Master these three pillars and watch your academic life transform.</p>
+        <div class="cards-grid">
+
+          <div class="card reveal">
+            <span class="card-icon">🎯</span>
+            <h3>Better Focus for Studying</h3>
+            <p>When you manage your time wisely, you dedicate deep, distraction-free blocks to studying. The result? You retain more, stress less, and your grades reflect the difference.</p>
+          </div>
+
+          <div class="card reveal">
+            <span class="card-icon">⚡</span>
+            <h3>Stop Procrastinating</h3>
+            <p>Procrastination thrives in vague, unstructured days. By scheduling tasks and breaking work into smaller steps, you remove the mental friction that keeps you stuck.</p>
+          </div>
+
+          <div class="card reveal">
+            <span class="card-icon">💚</span>
+            <h3>Stay Productive & Healthy</h3>
+            <p>Good time management isn't just about work — it protects your sleep, your social life, and your mental health. Balance is the ultimate productivity hack.</p>
+          </div>
+
+        </div>
+      </div>
+    </section>
+
+    <!-- ========================
+         PRODUCTIVE TIPS SECTION
+         ======================== -->
+    <section id="tips">
+      <div class="section-inner">
+        <h2 class="section-title reveal">🚀 Productive <span>Tips for Students</span></h2>
+        <p class="section-subtitle reveal">Simple habits that compound into extraordinary results over time.</p>
+        <div class="tips-box reveal">
+          <h3>📋 Your Daily Action Plan</h3>
+          <ul class="tips-list">
+            <li><span class="tip-num">1</span> <div><strong>Make a daily to-do list</strong> — Write down everything you need to do each morning so your brain can stop holding it all.</div></li>
+            <li><span class="tip-num">2</span> <div><strong>Study important tasks first</strong> — Tackle your hardest subject when your energy is highest, usually in the morning.</div></li>
+            <li><span class="tip-num">3</span> <div><strong>Use the Pomodoro Technique</strong> — Work for 25 focused minutes, then take a 5-minute break. Repeat 4 times, then take a longer break.</div></li>
+            <li><span class="tip-num">4</span> <div><strong>Reduce phone distractions</strong> — Put your phone on silent or in another room during study sessions. One notification can break 20 minutes of focus.</div></li>
+            <li><span class="tip-num">5</span> <div><strong>Sleep enough every night</strong> — Aim for 8–9 hours. Your brain consolidates memories during sleep, so rest IS part of studying.</div></li>
+            <li><span class="tip-num">6</span> <div><strong>Set daily goals</strong> — Small, specific goals (e.g., "finish Chapter 3") are more motivating than vague ones like "study more."</div></li>
+            <li><span class="tip-num">7</span> <div><strong>Keep your study space clean</strong> — A tidy desk signals your brain that it's time to focus. Clutter competes for mental bandwidth.</div></li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <!-- ========================
+         DAILY SCHEDULE SECTION
+         ======================== -->
+    <section id="schedule">
+      <div class="section-inner">
+        <h2 class="section-title reveal">📅 Sample <span>Daily Schedule</span></h2>
+        <p class="section-subtitle reveal">A balanced day for a student — structured enough to stay productive, flexible enough to enjoy life.</p>
+        <div class="table-wrap reveal">
+          <table>
+            <thead>
+              <tr>
+                <th>⏰ Time</th>
+                <th>📚 Activity</th>
+                <th>⏱ Duration</th>
+                <th>🏷 Category</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr><td>05:00 – 05:30</td><td>Wake up, prayer / morning routine</td><td>30 min</td><td><span class="tag tag-health">Health</span></td></tr>
+              <tr><td>05:30 – 06:00</td><td>Light exercise or stretching</td><td>30 min</td><td><span class="tag tag-health">Health</span></td></tr>
+              <tr><td>06:00 – 06:30</td><td>Breakfast & get ready for school</td><td>30 min</td><td><span class="tag tag-rest">Rest</span></td></tr>
+              <tr><td>06:30 – 07:00</td><td>Review notes before school</td><td>30 min</td><td><span class="tag tag-study">Study</span></td></tr>
+              <tr><td>07:00 – 13:00</td><td>School / classes</td><td>6 hrs</td><td><span class="tag tag-study">Study</span></td></tr>
+              <tr><td>13:00 – 14:00</td><td>Lunch & rest</td><td>1 hr</td><td><span class="tag tag-rest">Rest</span></td></tr>
+              <tr><td>14:00 – 16:00</td><td>Homework & assignments (Pomodoro)</td><td>2 hrs</td><td><span class="tag tag-study">Study</span></td></tr>
+              <tr><td>16:00 – 17:00</td><td>Free time / hobbies / social media</td><td>1 hr</td><td><span class="tag tag-social">Social</span></td></tr>
+              <tr><td>17:00 – 18:00</td><td>Exercise, sport, or walk outside</td><td>1 hr</td><td><span class="tag tag-health">Health</span></td></tr>
+              <tr><td>18:00 – 19:00</td><td>Dinner, prayer, family time</td><td>1 hr</td><td><span class="tag tag-social">Social</span></td></tr>
+              <tr><td>19:00 – 21:00</td><td>Evening study session (deep focus)</td><td>2 hrs</td><td><span class="tag tag-study">Study</span></td></tr>
+              <tr><td>21:00 – 21:30</td><td>Plan tomorrow's schedule</td><td>30 min</td><td><span class="tag tag-study">Study</span></td></tr>
+              <tr><td>21:30 – 22:00</td><td>Wind-down: reading, journaling</td><td>30 min</td><td><span class="tag tag-rest">Rest</span></td></tr>
+              <tr><td>22:00 – 05:00</td><td>Sleep 💤</td><td>7 hrs</td><td><span class="tag tag-health">Health</span></td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+
+    <!-- ========================
+         MOTIVATION SECTION
+         ======================== -->
+    <section id="motivation">
+      <div class="section-inner">
+        <p class="quote-text reveal">
+          "The secret of getting ahead is getting started. The secret of getting started is breaking your overwhelming tasks into small, manageable tasks — and then starting on the first one."
+        </p>
+        <p class="quote-author reveal">— Mark Twain</p>
+        <div class="motivation-pills reveal">
+          <span class="pill">💪 You've got this</span>
+          <span class="pill">📈 Progress over perfection</span>
+          <span class="pill">🌱 Small steps, big results</span>
+          <span class="pill">⏰ Start now</span>
+          <span class="pill">✨ Believe in yourself</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- ========================
+         FAQ SECTION
+         ======================== -->
+    <section id="faq">
+      <div class="section-inner">
+        <h2 class="section-title reveal">❓ Frequently Asked <span>Questions</span></h2>
+        <p class="section-subtitle reveal">Answers to questions students ask us most about time management.</p>
+        <div class="faq-list reveal">
+
+          <div class="faq-item">
+            <button class="faq-q" onclick="toggleFAQ(this)">
+              I always feel lazy and don't want to study. What should I do?
+              <span class="faq-icon">+</span>
+            </button>
+            <div class="faq-a">
+              Laziness is often a signal of overwhelm, not a character flaw. Start with the "2-minute rule" — if a task takes less than 2 minutes, do it now. For bigger tasks, commit to just 5 minutes. You'll almost always keep going once you've started. Also, check your sleep and diet; low energy is often a physical issue, not a motivation one.
+            </div>
+          </div>
+
+          <div class="faq-item">
+            <button class="faq-q" onclick="toggleFAQ(this)">
+              How do I stop getting distracted by my phone while studying?
+              <span class="faq-icon">+</span>
+            </button>
+            <div class="faq-a">
+              The most effective strategy is to physically separate yourself from your phone. Put it in another room, or use apps like Forest, Focus To-Do, or your phone's built-in Focus mode. Studies show that even having your phone face-down on your desk reduces cognitive performance. Out of sight truly means out of mind.
+            </div>
+          </div>
+
+          <div class="faq-item">
+            <button class="faq-q" onclick="toggleFAQ(this)">
+              What is the Pomodoro Technique and does it really work?
+              <span class="faq-icon">+</span>
+            </button>
+            <div class="faq-a">
+              Developed by Francesco Cirillo in the late 1980s, the Pomodoro Technique breaks work into 25-minute focused intervals (called "pomodoros") followed by 5-minute breaks. After 4 pomodoros, take a longer 15–30 minute break. It works because it harnesses urgency, makes long tasks feel manageable, and forces regular rest to maintain mental stamina.
+            </div>
+          </div>
+
+          <div class="faq-item">
+            <button class="faq-q" onclick="toggleFAQ(this)">
+              I have too many subjects. How do I prioritize what to study first?
+              <span class="faq-icon">+</span>
+            </button>
+            <div class="faq-a">
+              Use the Eisenhower Matrix: sort tasks into four categories — urgent & important (do first), important but not urgent (schedule it), urgent but not important (delegate or minimize), and neither (eliminate). For students this usually means: exam tomorrow = urgent+important. Reading ahead = important, not urgent. Random social media scrolling = neither.
+            </div>
+          </div>
+
+          <div class="faq-item">
+            <button class="faq-q" onclick="toggleFAQ(this)">
+              How many hours should a student study per day?
+              <span class="faq-icon">+</span>
+            </button>
+            <div class="faq-a">
+              Quality beats quantity. Research suggests 3–5 hours of focused study per day is more effective than 8 hours of distracted studying. What matters is eliminating distractions, taking proper breaks, and getting enough sleep. Studying 6+ hours while tired is nearly useless — your brain needs sleep to consolidate what you've learned.
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </section>
+
+    <!-- ========================
+         ABOUT SECTION
+         ======================== -->
+    <section id="about">
+      <div class="section-inner">
+        <div class="about-grid">
+          <div class="about-text reveal">
+            <h2>About <span>TimeSmart</span></h2>
+            <p>
+              TimeSmart was created as a school <strong>Informatics project</strong> with a simple mission: help teenagers and students master the skill that changes everything — managing their time.
+            </p>
+            <p>
+              We believe that time management isn't just a productivity trick. It's the foundation of academic success, mental well-being, and a fulfilling student life. When you control your schedule, you control your future.
+            </p>
+            <p>
+              This website combines research-backed strategies with practical, student-friendly tools to make the journey from overwhelmed to in-control as smooth as possible.
+            </p>
+          </div>
+          <div class="about-visual reveal">
+            <div class="about-icon">⏰</div>
+            <p style="color:var(--rose);font-family:var(--font-h);font-size:1.1rem;margin-top:.75rem;">Time is your most valuable asset</p>
+            <div class="stat-row">
+              <div class="stat">
+                <div class="stat-num">7+</div>
+                <div class="stat-label">Proven Tips</div>
+              </div>
+              <div class="stat">
+                <div class="stat-num">5</div>
+                <div class="stat-label">FAQ Topics</div>
+              </div>
+              <div class="stat">
+                <div class="stat-num">1</div>
+                <div class="stat-label">Daily Schedule</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- ========================
+       FOOTER
+       ======================== -->
+  <footer>
+    <div class="footer-inner">
+      <div class="footer-logo">⏰ TimeSmart</div>
+      <p class="footer-tagline">Helping students manage time and achieve their dreams.</p>
+      <div class="footer-links">
+        <a href="mailto:timesmart@student.school">📧 timesmart@student.school</a>
+        <a href="https://instagram.com/timesmart_id" target="_blank">📸 @timesmart_id</a>
+      </div>
+      <hr class="footer-divider"/>
+      <p class="footer-copy">© 2025 TimeSmart — Informatics School Project. Made with 💗 for students everywhere.</p>
+    </div>
+  </footer>
+
+  <!-- ========================
+       JAVASCRIPT
+       ======================== -->
+  <script>
+    /* --- Mobile menu toggle --- */
+    const hamburger = document.getElementById('hamburger');
+    const mobileMenu = document.getElementById('mobileMenu');
+
+    hamburger.addEventListener('click', () => {
+      mobileMenu.classList.toggle('open');
+    });
+
+    function closeMenu() {
+      mobileMenu.classList.remove('open');
+    }
+
+    /* --- FAQ accordion --- */
+    function toggleFAQ(btn) {
+      const item = btn.closest('.faq-item');
+      const answer = item.querySelector('.faq-a');
+      const isOpen = item.classList.contains('open');
+
+      // Close all
+      document.querySelectorAll('.faq-item').forEach(i => {
+        i.classList.remove('open');
+        i.querySelector('.faq-a').classList.remove('open');
+      });
+
+      // Open clicked if it was closed
+      if (!isOpen) {
+        item.classList.add('open');
+        answer.classList.add('open');
+      }
+    }
+
+    /* --- Scroll reveal --- */
+    const revealEls = document.querySelectorAll('.reveal');
+
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach((entry, i) => {
+        if (entry.isIntersecting) {
+          setTimeout(() => {
+            entry.target.classList.add('visible');
+          }, 80 * i);
+          observer.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.12 });
+
+    revealEls.forEach(el => observer.observe(el));
+  </script>
+
+</body>
+</html>
